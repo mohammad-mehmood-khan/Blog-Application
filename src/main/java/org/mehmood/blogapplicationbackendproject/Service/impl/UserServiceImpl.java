@@ -5,6 +5,7 @@ import org.mehmood.blogapplicationbackendproject.Service.UserService;
 import org.mehmood.blogapplicationbackendproject.entity.User;
 import org.mehmood.blogapplicationbackendproject.exceptions.ResourceNotFoundException;
 import org.mehmood.blogapplicationbackendproject.payLoads.UserDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +15,11 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
-public UserServiceImpl(UserRepo userRepo){
+    private final ModelMapper modelMapper;
+
+public UserServiceImpl(UserRepo userRepo,ModelMapper modelMapper){
     this.userRepo=userRepo;
+    this.modelMapper=modelMapper;
 }
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -29,8 +33,8 @@ public UserServiceImpl(UserRepo userRepo){
         User user = this.userRepo.findById(userId)
                 .orElseThrow((() -> new ResourceNotFoundException("User", "Id", userId)));
         //inbuilt exception
-//        User user = this.userRepo.findById(userId)
-//                .orElseThrow(()->new RuntimeException("Resource not found"));
+/*        User user = this.userRepo.findById(userId)
+               .orElseThrow(()->new RuntimeException("Resource not found")); */
 
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
@@ -68,21 +72,21 @@ public UserServiceImpl(UserRepo userRepo){
     }
 
     private User dtoToUser(UserDto userDto) {
-        User user = new User();
-        user.setName(userDto.getName());
-        user.setEmail(userDto.getEmail());
-        user.setAbout(userDto.getAbout());
-        user.setPassword(userDto.getPassword());
-        return user;
+//        User user = new User();
+//        user.setName(userDto.getName());
+//        user.setEmail(userDto.getEmail());
+//        user.setAbout(userDto.getAbout());
+//        user.setPassword(userDto.getPassword());
+        return this.modelMapper.map(userDto, User.class);
     }
 
     public UserDto userToDto(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setName(user.getName());
-        userDto.setEmail(user.getEmail());
-        userDto.setAbout(user.getAbout());
-        return userDto;
+//        UserDto userDto = new UserDto();
+//        userDto.setId(user.getId());
+//        userDto.setName(user.getName());
+//        userDto.setEmail(user.getEmail());
+//        userDto.setAbout(user.getAbout());
+        return this.modelMapper.map(user,UserDto.class);
 
     }
 }
