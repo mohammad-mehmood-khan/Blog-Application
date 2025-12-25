@@ -1,5 +1,6 @@
 package org.mehmood.blogapplicationbackendproject.Controller;
 
+import jakarta.validation.Valid;
 import org.mehmood.blogapplicationbackendproject.Service.UserService;
 import org.mehmood.blogapplicationbackendproject.payLoads.CustomApiResponse;
 import org.mehmood.blogapplicationbackendproject.payLoads.UserDto;
@@ -19,7 +20,7 @@ public class UserController {
 
 
     @PostMapping("/")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         return new ResponseEntity<>
                 (userService.createUser(userDto), HttpStatus.CREATED);
     }
