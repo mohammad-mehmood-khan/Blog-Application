@@ -1,17 +1,14 @@
 package org.mehmood.blogapplicationbackendproject.payLoads;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
 public class UserDto {
-    @Min(value = 1, message = "User ID must be greater than 0")
-    private int id;
+
+    private Integer id;
     @NotBlank(message = "Name cannot be blank")
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String name;

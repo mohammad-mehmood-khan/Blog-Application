@@ -11,8 +11,9 @@ public class BlogApplicationBackendProjectApplication {
     public static void main(String[] args) {
         SpringApplication.run(BlogApplicationBackendProjectApplication.class, args);
     }
+
     @Bean
-public ModelMapper modelMapper(){
-      return new ModelMapper();
-}
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 }

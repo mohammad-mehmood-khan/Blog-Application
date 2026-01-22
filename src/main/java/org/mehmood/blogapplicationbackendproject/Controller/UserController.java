@@ -27,14 +27,14 @@ public class UserController {
 
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable int userId) {
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable Integer userId) {
         return new ResponseEntity<>
                 (userService.updateUser(userDto, userId), HttpStatus.ACCEPTED);
     }
 
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<CustomApiResponse> deleteUser(@PathVariable int userId){
+    public ResponseEntity<CustomApiResponse> deleteUser(@PathVariable Integer userId){
        userService.deleteUser(userId);
         return new ResponseEntity<>
                 (new CustomApiResponse("user deleted successfully", true), HttpStatus.OK);
@@ -42,7 +42,7 @@ public class UserController {
 
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable int userId){
+    public ResponseEntity<UserDto> getUserById(@PathVariable Integer userId){
         return new ResponseEntity<>
                 (userService.getUserById(userId),HttpStatus.OK);
     }

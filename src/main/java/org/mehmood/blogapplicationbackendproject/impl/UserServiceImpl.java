@@ -1,4 +1,4 @@
-package org.mehmood.blogapplicationbackendproject.Service.impl;
+package org.mehmood.blogapplicationbackendproject.impl;
 
 import org.mehmood.blogapplicationbackendproject.Repository.UserRepo;
 import org.mehmood.blogapplicationbackendproject.Service.UserService;
