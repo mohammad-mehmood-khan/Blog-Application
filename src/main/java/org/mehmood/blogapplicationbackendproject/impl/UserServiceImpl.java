@@ -17,10 +17,11 @@ public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final ModelMapper modelMapper;
 
-public UserServiceImpl(UserRepo userRepo,ModelMapper modelMapper){
-    this.userRepo=userRepo;
-    this.modelMapper=modelMapper;
-}
+    public UserServiceImpl(UserRepo userRepo, ModelMapper modelMapper) {
+        this.userRepo = userRepo;
+        this.modelMapper = modelMapper;
+    }
+
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = this.dtoToUser(userDto);
@@ -47,8 +48,8 @@ public UserServiceImpl(UserRepo userRepo,ModelMapper modelMapper){
 
     @Override
     public void deleteUser(Integer userId) {
-        User user=this.userRepo.findById(userId)
-                .orElseThrow(()-> new RuntimeException("user not found"));
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("user not found"));
         this.userRepo.delete(user);
     }
 
@@ -56,8 +57,8 @@ public UserServiceImpl(UserRepo userRepo,ModelMapper modelMapper){
     public UserDto getUserById(Integer userId) {
         //can also use this
         //.orElseThrow((() -> new ResourceNotFoundException("User", "Id", userId)));
-        User user=this.userRepo.findById(userId)
-                .orElseThrow(()-> new RuntimeException("user not found"));
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("user not found"));
 
         return this.userToDto(user);
     }
@@ -86,7 +87,7 @@ public UserServiceImpl(UserRepo userRepo,ModelMapper modelMapper){
 //        userDto.setName(user.getName());
 //        userDto.setEmail(user.getEmail());
 //        userDto.setAbout(user.getAbout());
-        return this.modelMapper.map(user,UserDto.class);
+        return this.modelMapper.map(user, UserDto.class);
 
     }
 }

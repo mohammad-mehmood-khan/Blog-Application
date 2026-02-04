@@ -1,13 +1,17 @@
 package org.mehmood.blogapplicationbackendproject.payLoads;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class CustomApiResponse {
-    private String message;
-    private Boolean success;
+@Getter
+@Setter
+public class JwtAuthResponse {
+    private String token;
+        String type;
+        String username;
+
 }

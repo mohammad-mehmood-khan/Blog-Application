@@ -19,27 +19,27 @@ public class CommentServiceImpl implements CommentService {
     private final PostRepo postRepo;
     private final UserRepo userRepo;
 
-    public CommentServiceImpl(CommentRepo commentRepo,ModelMapper modelMapper,PostRepo postRepo,UserRepo userRepo){
-        this.commentRepo=commentRepo;
-        this.modelMapper=modelMapper;
-        this.postRepo=postRepo;
-        this.userRepo=userRepo;
+    public CommentServiceImpl(CommentRepo commentRepo, ModelMapper modelMapper, PostRepo postRepo, UserRepo userRepo) {
+        this.commentRepo = commentRepo;
+        this.modelMapper = modelMapper;
+        this.postRepo = postRepo;
+        this.userRepo = userRepo;
     }
 
     @Override
-    public CommentDto createComment(CommentDto commentDto, Integer postId,Integer userId) {
-        Post post = this.postRepo.findById(postId).orElseThrow(()->new ResourceNotFoundException("Post","postId",postId));
-        User user=this.userRepo.findById(userId).orElseThrow(()->new ResourceNotFoundException("User","userId",userId));
+    public CommentDto createComment(CommentDto commentDto, Integer postId, Integer userId) {
+        Post post = this.postRepo.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", "postId", postId));
+        User user = this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
         Comment comment = this.modelMapper.map(commentDto, Comment.class);
         comment.setPost(post);
         comment.setUser(user);
         Comment savedComment = this.commentRepo.save(comment);
-       return this.modelMapper.map(savedComment,CommentDto.class);
+        return this.modelMapper.map(savedComment, CommentDto.class);
     }
 
     @Override
     public void deleteComment(Integer commentId) {
-        Comment comment = this.commentRepo.findById(commentId).orElseThrow(()->new ResourceNotFoundException("Comment","commentId",commentId));
+        Comment comment = this.commentRepo.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Comment", "commentId", commentId));
         commentRepo.delete(comment);
     }
 }

@@ -3,11 +3,13 @@ package org.mehmood.blogapplicationbackendproject.exceptions;
 import org.mehmood.blogapplicationbackendproject.payLoads.CustomApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,13 +24,25 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> MethodArgsNotValidException(MethodArgumentNotValidException ex) {
-        Map<String,String> resp=new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error)->{
+        Map<String, String> resp = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
-            String message=error.getDefaultMessage();
-            resp.put(fieldName,message);
+            String message = error.getDefaultMessage();
+            resp.put(fieldName, message);
         });
-        return new ResponseEntity<Map<String,String>>(resp,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<?> handleBadCredentials() {
+
+        Map<String, Object> error = new HashMap<>();
+        error.put("timestamp", LocalDateTime.now());
+        error.put("status", 401);
+        error.put("error", "Unauthorized");
+        error.put("message", "Invalid email or password");
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
 
 }
